@@ -45,6 +45,7 @@ async def main():
     )
     i18n_middleware.setup(dispatcher=dp)
     
+    await bot.delete_webhook(drop_pending_updates=True)
     await set_default_commands(bot)
     logger.info("Bot started")
     await dp.start_polling(bot)
