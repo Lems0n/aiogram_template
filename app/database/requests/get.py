@@ -1,7 +1,5 @@
-from sqlalchemy import select, insert
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from typing import Optional
-from loguru import logger
 
 from ..models import *
 from ..tools import DatabaseConnection
