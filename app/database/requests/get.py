@@ -14,6 +14,4 @@ async def get_user(
     user_id: int
 ):
     user = await session.scalar(select(UserOrm).filter(UserOrm.tg_id == user_id))
-    if user:
-        return user
-    return None
+    return user if user else None
