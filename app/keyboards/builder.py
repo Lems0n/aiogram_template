@@ -10,7 +10,7 @@ from .callback_factory import GoBack
 def inline_keyboard_builder(
     buttons: Union[str, list[str]], 
     callback: Union[str, list[str]],
-    locale: str = "run",
+    locale: str = "ru",
 ):
     builder = InlineKeyboardBuilder()
     
@@ -19,7 +19,6 @@ def inline_keyboard_builder(
 
     for text, data in zip(buttons, callback):
         builder.button(text=text, callback_data=data)
-    
 
     builder.add(
         InlineKeyboardButton(
