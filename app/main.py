@@ -19,7 +19,6 @@ from secure import settings
 
 
 
-
 async def main():
     await create_tables()
     
