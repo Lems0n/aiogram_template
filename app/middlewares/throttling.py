@@ -17,7 +17,7 @@ class ThrottlingMiddleware(BaseMiddleware):
                        data: Dict[str, Any]
                        ) -> Any:
         event_context: EventContext = data.get("event_context")
-        user_id = event_context.user.id
+        user_id = event_context.user_id
         if user_id in self.limit:
             return
         else:
