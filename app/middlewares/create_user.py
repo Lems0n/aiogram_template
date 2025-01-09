@@ -1,7 +1,7 @@
 from typing import Awaitable, Callable, Dict, Any
 
 from aiogram import BaseMiddleware
-from aiogram.types import Message
+from aiogram.types import Message, User
 from aiogram.dispatcher.middlewares.user_context import EventContext
 from loguru import logger
 
@@ -15,13 +15,13 @@ class CreateUserMiddleware(BaseMiddleware):
                        event: Message,
                        data: Dict[str, Any]
                        ) -> Any:
-        user: EventContext = data.get("event_context").user
+        user: User = event.from_user
         try:
-            user = await add_user(
+            info = await add_user(
                 user.id, user.first_name,
                 user.username, user.language_code
             )
-            data["user"] = user
+            data["user"] = info
         except Exception as e:
             logger.error(e)
         return await handler(event, data)
