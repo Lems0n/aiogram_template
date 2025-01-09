@@ -1,6 +1,5 @@
 from aiogram import Router
-from aiogram.types import Message
-from aiogram.filters import Command, CommandStart
+from aiogram.types import CallbackQuery
 from aiogram_i18n import I18nContext
 
 
