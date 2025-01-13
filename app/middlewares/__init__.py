@@ -7,6 +7,6 @@ from .create_user import CreateUserMiddleware
 
 def setup_middlewares(dp: Dispatcher): 
     dp.message.middleware(CreateUserMiddleware())
-    dp.update.middleware(ThrottlingMiddleware())
+    dp.message.middleware(ThrottlingMiddleware())
     return dp
     

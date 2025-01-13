@@ -2,7 +2,7 @@ from typing import Awaitable, Callable, Dict, Any
 from cachetools import TTLCache
 
 from aiogram import BaseMiddleware
-from aiogram.types import Update
+from aiogram.types import Message
 from aiogram.dispatcher.middlewares.user_context import EventContext
 
 
@@ -12,12 +12,11 @@ class ThrottlingMiddleware(BaseMiddleware):
         self.limit = TTLCache(maxsize=10_00, ttl=time_limit)
             
     async def __call__(self,
-                       handler: Callable[[Update, Dict[str, Any]], Awaitable[Any]],
-                       event: Update,
+                       handler: Callable[[Message, Dict[str, Any]], Awaitable[Any]],
+                       event: Message,
                        data: Dict[str, Any]
                        ) -> Any:
-        event_context: EventContext = data.get("event_context")
-        user_id = event_context.user_id
+        user_id = event.from_user.id    
         if user_id in self.limit:
             return
         else:
