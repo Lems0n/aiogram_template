@@ -10,13 +10,13 @@ python = "^3.12"
 aiogram = "^3.16.0"
 aiogram-i18n = "^1.4"
 sqlalchemy = "^2.0.36"
-aiosqlite = "^0.20.0"
 loguru = "^0.7.3"
 fluent-runtime = "^0.4.0"
 v = "^1"
 pydantic-settings = "^2.7.0"
 cachetools = "^5.5.0"
 aioredis = "^2.0.1"
+asyncpg = "^0.30.0"
 
 
 [build-system]
