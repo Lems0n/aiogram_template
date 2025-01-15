@@ -1,19 +1,24 @@
 from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from aioredis import Redis as AsyncIORedis
+from aioredis import Redis 
 
 
 
-class PostgreSQLSettings(BaseSettings):
+class TelegramSettings(BaseSettings):
+    bot_token: SecretStr
+    admin_id: int
+
+
+class DatabaseSettings(BaseSettings):
     host: str
     port: int
     user: str
     password: SecretStr
-    db: str
-    
-    def postgres_connection(self) -> str:
-        return f"postgresql+asyncpg://{self.user}:{self.password.get_secret_value()}@{self.host}:{self.port}/{self.db}"
+    name: str
+
+    def postgres_connection(self):
+        return f"postgresql+asyncpg://{self.user}:{self.password.get_secret_value()}@{self.host}:{self.port}/postgres"
 
 
 class RedisSettings(BaseSettings):
@@ -23,8 +28,8 @@ class RedisSettings(BaseSettings):
     password: SecretStr
     db: int
     
-    async def redis_connection(self) -> AsyncIORedis:
-        return await AsyncIORedis.from_url(
+    async def redis_connection(self) -> Redis:
+        return await Redis.from_url(
             f'redis://{self.user}:{self.password.get_secret_value()}@{self.host}:{self.port}/{self.db}',
             decode_responses=True
         )
@@ -34,13 +39,12 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(
         case_sensitive=False,
         env_file=".env",
-        env_file_encoding="utf-8"
+        env_file_encoding='utf-8',
+        env_nested_delimiter="__"
     )
-    bot_token: SecretStr
-    admin_id: int
+    db: DatabaseSettings
+    tg: TelegramSettings
+    redis: RedisSettings 
     
-    database: PostgreSQLSettings = PostgreSQLSettings(_env_prefix="PSQL_")
-    redis: RedisSettings = RedisSettings(_env_prefix="REDIS_")
-
 
 settings = Settings()

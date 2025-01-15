@@ -2,7 +2,6 @@ from typing import Awaitable, Callable, Dict, Any
 
 from aiogram import BaseMiddleware
 from aiogram.types import Message, User
-from aiogram.dispatcher.middlewares.user_context import EventContext
 from loguru import logger
 
 from database.requests import add_user

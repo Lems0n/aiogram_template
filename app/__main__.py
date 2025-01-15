@@ -23,7 +23,7 @@ async def main():
     await create_tables()
     
     bot = Bot(
-        token=settings.bot_token.get_secret_value(),
+        token=settings.tg.bot_token.get_secret_value(),
         default=DefaultBotProperties(
             parse_mode=ParseMode.HTML,
             link_preview=LinkPreviewOptions(is_disabled=True)

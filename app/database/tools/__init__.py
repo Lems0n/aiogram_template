@@ -1,3 +1,3 @@
-from .db_connection import DatabaseConnection
+from .connection import db_connection
 from .table_name import TableNameMixin
 

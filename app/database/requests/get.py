@@ -2,13 +2,11 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..models import *
-from ..tools import DatabaseConnection
+from ..tools import db_connection
 
 
-connection = DatabaseConnection()
 
-
-@connection
+@db_connection
 async def get_user(
     session: AsyncSession,
     user_id: int

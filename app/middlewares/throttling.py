@@ -3,7 +3,6 @@ from cachetools import TTLCache
 
 from aiogram import BaseMiddleware
 from aiogram.types import Message
-from aiogram.dispatcher.middlewares.user_context import EventContext
 
 
 

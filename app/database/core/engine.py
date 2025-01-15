@@ -3,6 +3,6 @@ from secure import settings
 
 
 engine = create_async_engine(
-    settings.database.postgres_connection(),
+    settings.db.postgres_connection(),
 )
 

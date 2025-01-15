@@ -15,3 +15,5 @@ class DatabaseConnection(Generic[T]):
                 return await func(session, *args, **kwargs)
         return wrapper
 
+
+db_connection = DatabaseConnection()
