@@ -4,12 +4,10 @@ from typing import Optional
 from loguru import logger
 
 from ..models import *
-from ..tools import db_connection
+from ..core import db_manager
 
 
-
-
-@db_connection
+@db_manager
 async def add_user(
     session: AsyncSession,
     tg_id: int,

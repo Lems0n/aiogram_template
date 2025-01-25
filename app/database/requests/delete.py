@@ -2,11 +2,10 @@ from sqlalchemy import delete
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ..models import *
-from ..tools import db_connection
+from ..core import db_manager
 
 
-
-@db_connection
+@db_manager
 async def delete_user(
     session: AsyncSession,
     user_id: int

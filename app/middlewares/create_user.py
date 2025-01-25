@@ -4,7 +4,7 @@ from aiogram import BaseMiddleware
 from aiogram.types import Message, User
 from loguru import logger
 
-from database.requests import add_user
+from database import add_user
 
 
 

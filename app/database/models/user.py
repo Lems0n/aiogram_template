@@ -6,7 +6,6 @@ from .base import Base
 from ..tools import TableNameMixin
 
 
-
 class UserOrm(Base, TableNameMixin):
 
     id: Mapped[int] = mapped_column(primary_key=True)
