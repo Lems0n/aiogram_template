@@ -15,8 +15,8 @@ fluent-runtime = "^0.4.0"
 v = "^1"
 pydantic-settings = "^2.7.0"
 cachetools = "^5.5.0"
-aioredis = "^2.0.1"
 asyncpg = "^0.30.0"
+redis = "^5.2.1"
 
 
 [build-system]

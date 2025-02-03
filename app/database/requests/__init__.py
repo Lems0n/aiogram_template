@@ -1,3 +1,5 @@
+from loguru import logger
+
 from .add import add_user
 from .delete import delete_user
 from .get import get_user
@@ -19,6 +21,7 @@ __all__ = [
 async def create_tables():
     async with db_manager.engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+        logger.info("Tables created successfully")
         
         
 async def drop_tables():

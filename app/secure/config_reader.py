@@ -1,8 +1,7 @@
 from pydantic import SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-from aioredis import Redis 
-
+from redis.asyncio import Redis
 
 
 class TelegramSettings(BaseSettings):
@@ -29,8 +28,12 @@ class RedisSettings(BaseSettings):
     db: int
     
     async def redis_connection(self) -> Redis:
-        return await Redis.from_url(
-            f'redis://{self.user}:{self.password.get_secret_value()}@{self.host}:{self.port}/{self.db}',
+        return Redis(
+            host=self.host,
+            port=self.port,
+            username=self.user,
+            password=self.password.get_secret_value(),
+            db=self.db,
             decode_responses=True
         )
 

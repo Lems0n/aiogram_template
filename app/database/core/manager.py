@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine, async_sessionmaker,
     AsyncSession, AsyncEngine
 )
+from loguru import logger
 
 from secure import settings
 
@@ -27,6 +28,7 @@ class DatabaseManager:
 
     async def dispose(self):
         await self.engine.dispose()
+        logger.info('Database connection closed')
 
     def __call__(
         self, func: Callable[..., T]
