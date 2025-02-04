@@ -22,10 +22,3 @@ And finally, install the dependencies:
 ```bash
 poetry install --no-root
 ```
-
-**Configure .env file and run the application by**
-```bash
-poetry run python app/__main__.py
-```
-
-
