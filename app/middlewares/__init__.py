@@ -1,12 +1,16 @@
 from aiogram import Dispatcher
 
+from database import db_manager
 from .throttling import ThrottlingMiddleware
-from .create_user import CreateUserMiddleware
-
+from .session import DBSessionMiddleware
 
 
 def setup_middlewares(dp: Dispatcher): 
-    dp.message.middleware.register(ThrottlingMiddleware())
-    dp.message.middleware.register(CreateUserMiddleware())
+    dp.message.outer_middlewaremiddleware.register(
+        ThrottlingMiddleware()
+    )
+    dp.update.outer_middleware.register(DBSessionMiddleware(
+        session_maker=db_manager.session_maker
+    ))
     return dp
     

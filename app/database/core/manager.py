@@ -1,4 +1,5 @@
-from typing import Any, Callable, TypeVar
+from typing import Any
+
 from sqlalchemy.ext.asyncio import (
     create_async_engine, async_sessionmaker,
     AsyncSession, AsyncEngine
@@ -6,9 +7,6 @@ from sqlalchemy.ext.asyncio import (
 from loguru import logger
 
 from secure import settings
-
-
-T = TypeVar('T')
 
 
 class DatabaseManager:
@@ -29,14 +27,6 @@ class DatabaseManager:
     async def dispose(self):
         await self.engine.dispose()
         logger.info('Database connection closed')
-
-    def __call__(
-        self, func: Callable[..., T]
-    ) -> Callable[..., T]:
-        async def wrapper(*args, **kwargs):
-            async with self.session_maker() as session:
-                return await func(session, *args, **kwargs)
-        return wrapper
 
 
 db_manager = DatabaseManager(

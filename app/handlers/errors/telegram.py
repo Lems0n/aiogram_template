@@ -1,8 +1,6 @@
 from aiogram import Router
 from aiogram.types import ErrorEvent
-from aiogram.exceptions import (
-    TelegramBadRequest, TelegramAPIError, AiogramError
-)
+from aiogram.exceptions import AiogramError
 from aiogram.filters.exception import ExceptionTypeFilter
 from aiogram_i18n.context import I18nContext
 from loguru import logger
@@ -11,9 +9,7 @@ from loguru import logger
 telegram_errors_router = Router(name=__name__)
 
 
-@telegram_errors_router.error(ExceptionTypeFilter(
-    TelegramBadRequest, TelegramAPIError, AiogramError
-))
+@telegram_errors_router.error(ExceptionTypeFilter(AiogramError))
 async def handle_bad_request(event: ErrorEvent, i18n: I18nContext):
     update = event.update
     

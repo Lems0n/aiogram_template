@@ -54,7 +54,7 @@ async def main():
     i18n_middleware = I18nMiddleware(
         core=FluentRuntimeCore(path="app/locales/{locale}")
     )
-    i18n_middleware.setup(dispatcher=dp)
+    i18n_middleware.setup(dp)
     
     await dp.start_polling(
         bot,
