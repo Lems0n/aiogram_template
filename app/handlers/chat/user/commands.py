@@ -28,7 +28,11 @@ async def start(
     mention = user.mention_html()
     return await message.reply(
         text=i18n.greeting(mention=mention),  
-        reply_markup=inline_keyboard_builder()
+        reply_markup=inline_keyboard_builder(
+            "Click me",
+            "on_click_data",
+            locale=i18n.get_current().locale   
+        )
     )
 
 
