@@ -1,4 +1,4 @@
-from pydantic import SecretStr
+from pydantic import SecretStr, PostgresDsn
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 from redis.asyncio import Redis
@@ -16,8 +16,17 @@ class DatabaseSettings(BaseSettings):
     password: SecretStr
     name: str
 
-    def postgres_connection(self):
-        return f"postgresql+asyncpg://{self.user}:{self.password.get_secret_value()}@{self.host}:{self.port}/postgres"
+    def postgres_connection(self) -> str:
+        return str(
+            PostgresDsn.build(
+                scheme="postgresql+asyncpg",  
+                username=self.user,
+                password=self.password.get_secret_value(),
+                host=self.host,
+                port=str(self.port), 
+                path=f"/{self.name}"
+            )
+        )
 
 
 class RedisSettings(BaseSettings):

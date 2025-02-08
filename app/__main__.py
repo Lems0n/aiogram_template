@@ -44,6 +44,7 @@ async def main():
         key_builder=DefaultKeyBuilder(with_bot_id=True, with_destiny=True),
     )
     dp = Dispatcher(storage=storage)
+    dp["session_maker"] = db_manager.session_maker
 
     setup_middlewares(dp)
     setup_routers(dp)

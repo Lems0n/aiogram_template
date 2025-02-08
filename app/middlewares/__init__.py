@@ -1,6 +1,5 @@
 from aiogram import Dispatcher
 
-from database import db_manager
 from .throttling import ThrottlingMiddleware
 from .session import DBSessionMiddleware
 
@@ -10,7 +9,7 @@ def setup_middlewares(dp: Dispatcher):
         ThrottlingMiddleware()
     )
     dp.update.outer_middleware.register(DBSessionMiddleware(
-        session_maker=db_manager.session_maker
+        session_maker=dp["session_maker"]
     ))
     return dp
     
