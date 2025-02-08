@@ -5,11 +5,9 @@ from .session import DBSessionMiddleware
 
 
 def setup_middlewares(dp: Dispatcher): 
-    dp.message.outer_middlewaremiddleware.register(
-        ThrottlingMiddleware()
+    dp.message.middleware(ThrottlingMiddleware())
+    dp.update.middleware(
+        DBSessionMiddleware(dp["session_maker"])
     )
-    dp.update.outer_middleware.register(DBSessionMiddleware(
-        session_maker=dp["session_maker"]
-    ))
     return dp
     
