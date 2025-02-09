@@ -18,7 +18,7 @@ class ErrorReportingMiddleware(BaseMiddleware):
         try:
             error_message = f"Произошла ошибка: {event.exception}"
 
-            traceback_info = traceback.format_exc(3)
+            traceback_info = traceback.format_exc()
             shortened_traceback = "\n".join(
                 traceback_info.splitlines()[-5:]
             )  
