@@ -36,8 +36,8 @@ class RedisSettings(BaseSettings):
     password: SecretStr
     db: int
     
-    async def redis_connection(self) -> Redis:
-        return Redis(
+    def redis_connection(self) -> Redis:
+        return Redis.from_url(
             host=self.host,
             port=self.port,
             username=self.user,

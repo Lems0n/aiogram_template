@@ -1,8 +1,4 @@
-import asyncio
-from contextlib import suppress
-
 from aiogram import Bot, Dispatcher
-from aiogram.enums import ParseMode
 from aiogram.types import LinkPreviewOptions
 from aiogram.client.default import DefaultBotProperties
 from aiogram.fsm.storage.redis import RedisStorage
@@ -30,17 +26,17 @@ async def on_shutdown():
     logger.info("Bot stopped")
 
 
-async def main():
+def main():
     bot = Bot(
         token=settings.tg.bot_token.get_secret_value(),
         default=DefaultBotProperties(
-            parse_mode=ParseMode.HTML,
+            parse_mode="HTML",
             link_preview=LinkPreviewOptions(is_disabled=True)
         )
     )
 
     storage = RedisStorage(
-        redis=await settings.redis.redis_connection(),
+        redis=settings.redis.redis_connection(),
         key_builder=DefaultKeyBuilder(with_bot_id=True, with_destiny=True),
     )
     dp = Dispatcher(storage=storage)
@@ -57,15 +53,11 @@ async def main():
     )
     i18n_middleware.setup(dp)
     
-    await dp.start_polling(
+    dp.run_polling(
         bot,
         allowed_updates=dp.resolve_used_update_types()
     )
 
      
 if __name__ == "__main__":
-    with suppress(KeyboardInterrupt):
-        asyncio.run(main())
-        
-    __import__("sys").exit(0)
-
+    main()
