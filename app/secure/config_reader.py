@@ -37,7 +37,7 @@ class RedisSettings(BaseSettings):
     db: int
     
     def redis_connection(self) -> Redis:
-        return Redis.from_url(
+        return Redis(
             host=self.host,
             port=self.port,
             username=self.user,
