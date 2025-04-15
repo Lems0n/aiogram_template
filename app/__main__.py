@@ -26,8 +26,8 @@ async def on_shutdown():
     logger.info("Bot stopped")
 
 
-def main():
-    bot = Bot(
+def create_bot() -> Bot:
+    return Bot(
         token=settings.tg.bot_token.get_secret_value(),
         default=DefaultBotProperties(
             parse_mode="HTML",
@@ -35,16 +35,20 @@ def main():
         )
     )
 
+
+def create_dispatcher() -> Dispatcher:
     storage = RedisStorage(
         redis=settings.redis.redis_connection(),
         key_builder=DefaultKeyBuilder(with_bot_id=True, with_destiny=True),
     )
-    dp = Dispatcher(storage=storage)
-    dp["session_maker"] = db_manager.session_maker
-
+    dp = Dispatcher(
+        storage=storage,
+        session_maker=db_manager.session_maker
+    )
+    
     setup_middlewares(dp)
     setup_routers(dp)
-    
+
     dp.startup.register(on_startup)
     dp.shutdown.register(on_shutdown)
 
@@ -52,7 +56,13 @@ def main():
         core=FluentRuntimeCore(path="app/locales/{locale}")
     )
     i18n_middleware.setup(dp)
-    
+    return dp
+
+
+def main():
+    bot: Bot = create_bot()
+    dp: Dispatcher = create_dispatcher()
+
     dp.run_polling(
         bot,
         allowed_updates=dp.resolve_used_update_types()
