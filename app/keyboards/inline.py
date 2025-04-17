@@ -1,10 +1,18 @@
-from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram_i18n.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram_i18n import LazyProxy
 
 
-
-main_keyboard = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text="Профиль", callback_data="profile")],
-    [InlineKeyboardButton(text="Помощь", callback_data="help")],
-])
+def get_main_keyboard(locale: str = "ru") -> InlineKeyboardMarkup:
+    buttons = [
+        [InlineKeyboardButton(
+            text=LazyProxy("profile", locale=locale),
+            callback_data="profile"
+        )],
+        [InlineKeyboardButton(
+            text=LazyProxy("settings", locale=locale),
+            callback_data="settings"
+        )]
+    ]
+    return InlineKeyboardMarkup(inline_keyboard=buttons)
 
 

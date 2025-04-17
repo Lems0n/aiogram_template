@@ -23,8 +23,8 @@ class DatabaseSettings(BaseSettings):
                 username=self.user,
                 password=self.password.get_secret_value(),
                 host=self.host,
-                port=str(self.port), 
-                path=f"/{self.name}"
+                port=self.port, 
+                path=self.name
             )
         )
 

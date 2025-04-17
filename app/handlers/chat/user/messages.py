@@ -1,4 +1,4 @@
-from aiogram import Router
+from aiogram import Router, F
 from aiogram.types import Message
 from aiogram_i18n import I18nContext
 

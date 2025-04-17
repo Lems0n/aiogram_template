@@ -11,6 +11,7 @@ def inline_keyboard_builder(
     buttons: Union[str, list[str]], 
     callback: Union[str, list[str]],
     locale: str = "ru",
+    *sizes: int 
 ):
     builder = InlineKeyboardBuilder()
     
@@ -25,7 +26,7 @@ def inline_keyboard_builder(
             text=LazyProxy("back", locale=locale), callback_data=GoBack(step=1).pack()
         )
     )
-    return builder.adjust(2).as_markup()
+    return builder.adjust(*sizes).as_markup()
 
 
 
