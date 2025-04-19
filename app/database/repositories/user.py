@@ -23,7 +23,7 @@ class UserRepository(AbstractRepository[UserOrm]):
         return result.scalar_one_or_none()
 
     async def get_by_id(self, obj_id: int) -> UserOrm | None:
-        return await self.session.get(self.model, obj_id)
+        return await self.session.scalar(select(self.model).where(self.model.tg_id == obj_id))
 
     async def list(self, **filters) -> Sequence[UserOrm]:
         stmt = select(self.model).filter_by(**filters)

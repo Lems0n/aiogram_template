@@ -15,9 +15,9 @@ class UserService:
     ) -> UserOrm:
         """Регистрирует или обновляет пользователя."""
         async with self._uow: 
-            user = await self._uow.users.get(id=user_id)
+            user = await self._uow.users.get(tg_id=user_id)
             user_data = {
-                "id": user_id,
+                "tg_id": user_id,
                 "name": name,
                 "username": username,
                 "language_code":  language_code
