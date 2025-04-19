@@ -1,8 +1,9 @@
 from loguru import logger
 
 from .core import db_manager
-from .models import Base
-from .requests import *
+from .models import *
+from .repositories import *
+from .uow import AbstractUnitOfWork, UnitOfWork
 
 
 async def create_tables():

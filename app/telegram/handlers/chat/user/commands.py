@@ -2,9 +2,8 @@ from aiogram import Router
 from aiogram.types import Message
 from aiogram.filters import Command, CommandStart
 from aiogram_i18n import I18nContext
-from sqlalchemy.ext.asyncio import AsyncSession
 
-from database import add_user
+from services import UserService
 from keyboards import inline_keyboard_builder
 
 
@@ -15,11 +14,10 @@ user_commands_router = Router(name=__name__)
 async def start(
     message: Message, 
     i18n: I18nContext, 
-    session: AsyncSession
+    user_service: UserService
 ):
     user = message.from_user
-    await add_user(
-        session,
+    await user_service.register_user(
         user.id, user.first_name,
         user.username, user.language_code
     )
