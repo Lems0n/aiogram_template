@@ -1,6 +1,8 @@
 from typing import Optional
 from database import AbstractUnitOfWork, UserOrm
 
+from exceptions import UserUpdateError
+
 
 class UserService:
     def __init__(self, uow: AbstractUnitOfWork):
@@ -25,7 +27,7 @@ class UserService:
             if user:
                 updated_user = await self._uow.users.update(user_id, user_data)
                 if updated_user is None:
-                     raise Exception("Couldn't update the user") 
+                     raise UserUpdateError("Couldn't update the user") 
                 user = updated_user
             else:
                 user = await self._uow.users.add(user_data)
@@ -34,5 +36,15 @@ class UserService:
     async def get_user(self, user_id: int) -> UserOrm | None:
         """Получает пользователя по ID."""
         async with self._uow: 
-            user = await self._uow.users.get_by_id(user_id)
-            return user 
+            user = await self._uow.users.get(tg_id=user_id)
+            return user
+        
+    async def delete_user(self, user_id: int) -> bool:
+        """Удаляет пользователя по ID."""
+        async with self._uow:
+            user = await self.get_user(user_id)
+            if user is None:
+                return
+            await self._uow.users.delete(tg_id=user_id)
+            return True
+        
