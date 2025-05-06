@@ -1,5 +1,6 @@
 from typing import Optional
 from database import AbstractUnitOfWork, UserOrm
+from loguru import logger
 
 from exceptions import UserUpdateError
 
@@ -31,6 +32,7 @@ class UserService:
                 user = updated_user
             else:
                 user = await self._uow.users.add(user_data)
+                logger.info(f"User {name} registered")
         return user 
 
     async def get_user(self, user_id: int) -> UserOrm | None:
@@ -46,5 +48,6 @@ class UserService:
             if user is None:
                 return
             await self._uow.users.delete(tg_id=user_id)
+            logger.info(f"User {user.name} deleted")
             return True
         

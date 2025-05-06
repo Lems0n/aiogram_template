@@ -31,7 +31,7 @@ class UserRepository(AbstractRepository[UserOrm]):
         return result.scalars().all()
 
     async def update(self, obj_id: int, data: dict) -> UserOrm | None:
-        user = await self.get_by_id(obj_id)
+        user = await self.get(tg_id=obj_id)
         if user:
             for key, value in data.items():
                 if hasattr(user, key):
